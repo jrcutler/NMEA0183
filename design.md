@@ -4,10 +4,12 @@ NMEA0183 State Machine
 Character Groups
 ----------------
 
-RESERVED = `\x0a\x0d!$*,^`
-FUTURE = `\x5c\x7e-\xff`
-CR = `\x0d`
-LF = `\x0a`
+|Name    |Value          |
+|--------|---------------|
+|RESERVED|`\x0a\x0d!$*,^`|
+|FUTURE  |`\x5c\x7e-\xff`|
+|CR      |`\x0d`         |
+|LF      |`\x0a`         |
 
 Rules
 -----
