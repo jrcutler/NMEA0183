@@ -29,9 +29,9 @@ Rules
 |FIELD_DATA_HEX_LO|`0-9A-F`|FIELD_DATA       |
 |FIELD_DATA       |`*`     |CHECKSUM_HI      |
 |CHECKSUM_HI      |`0-9A-F`|CHECKSUM_LO      |
-|CHECKSUM_LO      |`0-9A-F`|EOS_CR           |
-|EOS_CR           |CR      |EOS_LF           |
-|EOS_LF           |LF      |ACCEPT           |
+|CHECKSUM_LO      |`0-9A-F`|EOS              |
+|EOS              |CR      |ACCEPT           |
+|EOS              |LF      |ACCEPT           |
 |*                |RESERVED|RESET            |
 |FIELD_DATA       |*       |FIELD_DATA       |
 |*                |*       |RESET            |
