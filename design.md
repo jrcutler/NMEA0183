@@ -16,8 +16,8 @@ Rules
 
 (All rules are in priority order.)
 
-|Current state    |Input      |Next state       |
-|-----------------|-----------|-----------------|
+|Current state    |Input   |Next state       |
+|-----------------|--------|-----------------|
 |*                |FUTURE  |RESET            |
 |*                |`$`     |ADDRESS          |
 |ADDRESS          |`A-Z0-9`|ADDRESS          |
