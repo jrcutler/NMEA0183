@@ -22,6 +22,7 @@ Rules
 |*                |`$`     |ADDRESS          |
 |ADDRESS          |`A-Z0-9`|ADDRESS          |
 |ADDRESS          |`,`     |FIELD_DATA       |
+|ADDRESS          |`*`     |CHECKSUM_HI      |
 |FIELD_DATA       |`,`     |FIELD_DATA       |
 |FIELD_DATA       |`^`     |FIELD_DATA_HEX_HI|
 |FIELD_DATA_HEX_HI|`0-9A-F`|FIELD_DATA_HEX_LO|
