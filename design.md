@@ -20,7 +20,7 @@ Rules
 |-----------------|-----------|-----------------|
 |*                |FUTURE     |RESET            |
 |*                |`$`        |ADDRESS          |
-|ADDRESS          |`A-Za-z0-9`|ADDRESS          |
+|ADDRESS          |`A-Z0-9`   |ADDRESS          |
 |ADDRESS          |`,`        |FIELD_DATA       |
 |FIELD_DATA       |`,`        |FIELD_DATA       |
 |FIELD_DATA       |`^`        |FIELD_DATA_HEX_HI|
