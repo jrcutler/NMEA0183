@@ -22,7 +22,7 @@ NMEA0183::NMEA0183()
 
 void NMEA0183::reset()
 {
-    state = INVALID;
+    state = NMEA0183_INVALID;
     update_checksum = false;
     index = 0;
     fields = 0;
@@ -32,7 +32,7 @@ void NMEA0183::reset()
 
 bool NMEA0183::update(char c)
 {
-    if (state == ACCEPT)
+    if (state == NMEA0183_ACCEPT)
     {
         // discard previously accepted sentence
         reset();
@@ -48,13 +48,13 @@ bool NMEA0183::update(char c)
                 index = 0;
                 fields = 0;
                 checksum = 0;
-                state = ADDRESS;
+                state = NMEA0183_ADDRESS;
             break;
             case '*':
-                if (state == FIELD_DATA || state == ADDRESS)
+                if (state == NMEA0183_FIELD_DATA || state == NMEA0183_ADDRESS)
                 {
                     update_checksum = false;
-                    state = CHECKSUM_HI;
+                    state = NMEA0183_CHECKSUM_HI;
                 }
                 else
                 {
@@ -62,9 +62,9 @@ bool NMEA0183::update(char c)
                 }
             break;
             case ',':
-                if (state == FIELD_DATA || state == ADDRESS)
+                if (state == NMEA0183_FIELD_DATA || state == NMEA0183_ADDRESS)
                 {
-                    state = FIELD_DATA;
+                    state = NMEA0183_FIELD_DATA;
                     fields++;
                 }
                 else
@@ -81,7 +81,7 @@ bool NMEA0183::update(char c)
             default:
                 switch (state)
                 {
-                    case ADDRESS:
+                    case NMEA0183_ADDRESS:
                         if ((c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
                         {
                             update_checksum = true;
@@ -91,49 +91,49 @@ bool NMEA0183::update(char c)
                             reset();
                         }
                     break;
-                    case FIELD_DATA_HEX_HI:
+                    case NMEA0183_FIELD_DATA_HEX_HI:
                         if (is_hex(c))
                         {
-                            state = FIELD_DATA_HEX_LO;
+                            state = NMEA0183_FIELD_DATA_HEX_LO;
                         }
                         else
                         {
                             reset();
                         }
                     break;
-                    case FIELD_DATA_HEX_LO:
+                    case NMEA0183_FIELD_DATA_HEX_LO:
                         if (is_hex(c))
                         {
-                            state = FIELD_DATA;
+                            state = NMEA0183_FIELD_DATA;
                         }
                         else
                         {
                             reset();
                         }
                     break;
-                    case CHECKSUM_HI:
+                    case NMEA0183_CHECKSUM_HI:
                         if (c == to_hex(checksum >> 4))
                         {
                             // checksum high nibble matches
-                            state = CHECKSUM_LO;
+                            state = NMEA0183_CHECKSUM_LO;
                         }
                         else
                         {
                             reset();
                         }
                     break;
-                    case CHECKSUM_LO:
+                    case NMEA0183_CHECKSUM_LO:
                         if (c == to_hex(checksum & 0x0f))
                         {
                             // checksum valid
-                            state = EOS;
+                            state = NMEA0183_EOS;
                         }
                         else
                         {
                             reset();
                         }
                     break;
-                    case INVALID:
+                    case NMEA0183_INVALID:
                         // do nothing
                     break;
                     default:
@@ -142,11 +142,11 @@ bool NMEA0183::update(char c)
             break;
         };
     }
-    else if (state == EOS && (c == 0x0a || c == 0x0d))
+    else if (state == NMEA0183_EOS && (c == 0x0a || c == 0x0d))
     {
         // NUL terminate
         c = 0;
-        state = ACCEPT;
+        state = NMEA0183_ACCEPT;
     }
     else
     {
@@ -154,20 +154,20 @@ bool NMEA0183::update(char c)
         reset();
     }
 
-    if (state != INVALID)
+    if (state != NMEA0183_INVALID)
     {
         sentence[index++] = c;
         if (update_checksum)
         {
             checksum ^= c;
         }
-        if ((index == sizeof(sentence) - 1) && state != ACCEPT)
+        if ((index == sizeof(sentence) - 1) && state != NMEA0183_ACCEPT)
         {
             reset();
         }
     }
 
-    return state == ACCEPT;
+    return state == NMEA0183_ACCEPT;
 }
 
 
@@ -185,7 +185,7 @@ const uint8_t NMEA0183::getChecksum() const
 
 const char *NMEA0183::getSentence() const
 {
-    return state == ACCEPT ? sentence : NULL;
+    return state == NMEA0183_ACCEPT ? sentence : NULL;
 }
 
 
