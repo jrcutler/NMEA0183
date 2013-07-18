@@ -35,6 +35,9 @@
 # endif
 #else
 # include <stdint.h>
+# ifndef boolean
+#  define boolean bool
+# endif
 #endif
 
 enum
@@ -55,7 +58,7 @@ class NMEA0183
 public:
     NMEA0183();
     void reset();
-    bool update(char c);
+    boolean update(char c);
     const char *getSentence() const;
     const uint8_t getFields() const;
 
@@ -68,7 +71,7 @@ private:
     /// Current state
     uint8_t state;
     /// Checksum update flag
-    bool update_checksum;
+    boolean update_checksum;
     /// NMEA0183 sentence buffer.
     // The maximum number of characters in a sentence shall be 82, consisting
     // of a maximum of 79 characters between the starting delimiter "$" or "!"

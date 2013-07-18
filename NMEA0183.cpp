@@ -34,7 +34,7 @@ static char to_hex(uint8_t nibble)
 }
 
 
-static bool is_hex(char c)
+static boolean is_hex(char c)
 {
     return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F');
 }
@@ -56,7 +56,7 @@ void NMEA0183::reset()
 }
 
 
-bool NMEA0183::update(char c)
+boolean NMEA0183::update(char c)
 {
     if (state == NMEA0183_ACCEPT)
     {
